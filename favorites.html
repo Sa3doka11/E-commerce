@@ -141,262 +141,261 @@
             }
         }
 
-
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-    text-decoration: none;
-    list-style: none;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
 
-body {
-    background-image: url(../pic/registCover.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding-top: 60px; /* Prevent content overlap with fixed navbar */
-}
+        body {
+            background-image: url(../pic/registCover.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 60px; /* Prevent content overlap with fixed navbar */
+        }
 
-/* Navbar Styles */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #8297d0;
-    color: white;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-}
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #8297d0;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
 
-.logo a {
-    color: white;
-    font-size: 1.5rem;
-    text-decoration: none;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-}
+        .logo a {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
 
-.minlogo {
-    width: 6%;
-    margin-right: 0.5rem;
-}
+        .minlogo {
+            width: 6%;
+            margin-right: 0.5rem;
+        }
 
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
-    white-space: nowrap;
-    padding: 0.5rem 0;
-}
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            white-space: nowrap;
+            padding: 0.5rem 0;
+        }
 
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s;
-}
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
 
-.nav-links a:hover {
-    color: #056ba6;
-}
+        .nav-links a:hover {
+            color: #056ba6;
+        }
 
-/* Styling for the logout icon */
-.logout-icon {
-    color: #333;
-    font-size: 1.5rem;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
+        /* Styling for the logout icon */
+        .logout-icon {
+            color: #333;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
 
-.logout-icon:hover {
-    color: #ff4444;
-    transform: rotate(360deg);
-}
+        .logout-icon:hover {
+            color: #ff4444;
+            transform: rotate(360deg);
+        }
 
-/* Hamburger menu styles */
-.hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001;
-}
+        /* Hamburger menu styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
 
-.hamburger span {
-    width: 100%;
-    height: 3px;
-    background-color: white;
-    transition: all 0.3s ease;
-}
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
 
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
 
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
 
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
-}
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
 
-/* Mobile sidebar styles */
-@media (max-width: 768px) {
-    .hamburger {
-        display: flex;
-    }
+        /* Mobile sidebar styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
 
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -250px; /* Hidden by default */
-        width: 250px;
-        height: 100vh;
-        background-color: #8297d0;
-        flex-direction: column;
-        justify-content: flex-start;
-        padding-top: 60px;
-        transition: right 0.3s ease;
-        z-index: 1000;
-    }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -250px; /* Hidden by default */
+                width: 250px;
+                height: 100vh;
+                background-color: #8297d0;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 60px;
+                transition: right 0.3s ease;
+                z-index: 1000;
+            }
 
-    .nav-links.active {
-        right: 0; /* Show sidebar */
-    }
+            .nav-links.active {
+                right: 0; /* Show sidebar */
+            }
 
-    .nav-links li {
-        margin: 20px 0;
-        text-align: center;
-    }
+            .nav-links li {
+                margin: 20px 0;
+                text-align: center;
+            }
 
-    .nav-links a {
-        font-size: 18px;
-    }
-}
+            .nav-links a {
+                font-size: 18px;
+            }
+        }
 
-/* Footer */
-.footer {
-    background-color: #2d3436;
-    color: white;
-    padding: 3rem 2rem;
-    margin-top: auto;
-}
+        /* Footer */
+        .footer {
+            background-color: #2d3436;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: auto;
+        }
 
-.footer-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.footer-column h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
 
-.footer-column p {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    color: white;
-}
+        .footer-column p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
 
-.footer-column ul {
-    list-style: none;
-}
+        .footer-column ul {
+            list-style: none;
+        }
 
-.footer-column ul li {
-    margin-bottom: 0.5rem;
-}
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
 
-.footer-column ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
-}
+        .footer-column ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
 
-.footer-column ul li a:hover {
-    color: #056ba6;
-}
+        .footer-column ul li a:hover {
+            color: #056ba6;
+        }
 
-.social-icons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
 
-.social-icons a {
-    color: white;
-    font-size: 1.2rem;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-}
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
 
-.social-icons a:hover {
-    background-color: #056ba6;
-}
+        .social-icons a:hover {
+            background-color: #056ba6;
+        }
 
-.footer-column p i {
-    margin-right: 0.5rem;
-}
+        .footer-column p i {
+            margin-right: 0.5rem;
+        }
 
-.footer-bottom {
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.footer-bottom p {
-    font-size: 0.9rem;
-    color: white;
-}
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: white;
+        }
 
-/* Responsive Design for Footer */
-@media (max-width: 768px) {
-    .footer-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
+        /* Responsive Design for Footer */
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
 
-    .social-icons {
-        justify-content: center;
-    }
-}
+            .social-icons {
+                justify-content: center;
+            }
+        }
 
-/* Fade-in Animation */
-.favorite-card {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
+        /* Fade-in Animation */
+        .favorite-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
 
-.fade-in {
-    opacity: 1;
-    transform: translateY(0);
-}
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -547,55 +546,51 @@ body {
                 return;
             }
 
-            userFavorites.forEach((item, localIndex) => {
-                const globalIndex = favorites.findIndex(fav => fav.name === item.name && fav.email === currentUser.email);
-                if (globalIndex === -1) return; // Skip if index not found
+            userFavorites.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'favorite-card';
-                card.dataset.index = globalIndex; // Store index in dataset
+                card.dataset.index = index; // Store index relative to userFavorites
                 card.innerHTML = `
                     <img src="${item.image}" alt="${item.name}">
                     <h3>${item.name}</h3>
                     <p>${item.description}</p>
                     <p class="price">$${item.price}</p>
                     <div class="favorite-actions">
-                        <button class="remove-btn" onclick="removeFavorite(this)"><i class="fas fa-trash"></i> Remove</button>
-                        <button class="cart-btn" onclick="moveToCart(this)"><i class="fas fa-cart-shopping"></i> Move to Cart</button>
+                        <button class="remove-btn" onclick="removeFavorite(${index})"><i class="fas fa-trash"></i> Remove</button>
+                        <button class="cart-btn" onclick="moveToCart(${index})"><i class="fas fa-cart-shopping"></i> Move to Cart</button>
                     </div>
                 `;
                 favoritesGrid.appendChild(card);
             });
+
+            // Re-observe new elements for animations
+            setupFadeInAnimations();
         }
 
         // Remove product from favorites
-        function removeFavorite(button) {
-            const card = button.closest('.favorite-card');
-            const index = card.dataset.index;
+        function removeFavorite(index) {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const userFavorites = favorites.filter(item => item.email === currentUser.email);
 
-            if (index >= 0 && index < favorites.length) {
-                const removedItem = favorites[index];
-                favorites.splice(index, 1);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                card.remove();
-                alert(`${removedItem.name} has been removed from your favorites!`);
+            if (index >= 0 && index < userFavorites.length) {
+                const globalIndex = favorites.findIndex(fav => 
+                    fav.name === userFavorites[index].name && 
+                    fav.email === currentUser.email
+                );
 
-                const remainingFavorites = favorites.filter(item => item.email === currentUser.email);
-                if (remainingFavorites.length === 0) {
-                    document.getElementById('noFavorites').style.display = 'block';
-                } else {
-                    loadFavorites(); // Reload to ensure correct indexing
+                if (globalIndex !== -1) {
+                    const removedItem = favorites[globalIndex];
+                    favorites.splice(globalIndex, 1);
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    alert(`${removedItem.name} has been removed from your favorites!`);
+                    loadFavorites(); // Reload the favorites to update the display
                 }
-            } else {
-                console.error("Invalid index for removal:", index);
             }
         }
 
         // Move product to shopping cart
-        function moveToCart(button) {
-            const card = button.closest('.favorite-card');
-            const index = card.dataset.index;
+        function moveToCart(index) {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) {
                 alert("Please log in to move items to your cart!");
@@ -604,41 +599,43 @@ body {
             }
 
             const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const userFavorites = favorites.filter(item => item.email === currentUser.email);
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const item = favorites[index];
 
-            if (!item) {
-                console.error("Item not found at index:", index);
-                return;
+            if (index >= 0 && index < userFavorites.length) {
+                const globalIndex = favorites.findIndex(fav => 
+                    fav.name === userFavorites[index].name && 
+                    fav.email === currentUser.email
+                );
+
+                if (globalIndex !== -1) {
+                    const item = favorites[globalIndex];
+                    const product = { 
+                        name: item.name, 
+                        description: item.description, 
+                        price: item.price, 
+                        image: item.image, 
+                        email: currentUser.email 
+                    };
+
+                    // Check if product already exists in cart
+                    if (cart.some(cartItem => cartItem.name === product.name && cartItem.email === currentUser.email)) {
+                        alert("This product is already in your cart!");
+                        return;
+                    }
+
+                    // Add to cart
+                    cart.push(product);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Remove from favorites
+                    favorites.splice(globalIndex, 1);
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    alert(`${item.name} has been moved to your cart!`);
+
+                    loadFavorites(); // Reload the favorites to update the display
+                }
             }
-
-            const product = { name: item.name, description: item.description, price: item.price, image: item.image, email: currentUser.email };
-
-            // Check if product already exists in cart
-            if (cart.some(item => item.name === product.name && item.email === currentUser.email)) {
-                alert("This product is already in your cart!");
-                return;
-            }
-
-            // Add to cart
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Remove from favorites
-            favorites.splice(index, 1);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            card.remove();
-            alert(`${item.name} has been moved to your cart!`);
-
-            const remainingFavorites = favorites.filter(item => item.email === currentUser.email);
-            if (remainingFavorites.length === 0) {
-                document.getElementById('noFavorites').style.display = 'block';
-            } else {
-                loadFavorites(); // Reload to fix any indexing issues
-            }
-
-            // Redirect to cart page (optional, uncomment if desired)
-            window.location.href = "cart.html";
         }
 
         // Function to logout
