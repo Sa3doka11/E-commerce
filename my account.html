@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    <link href='./Style/my account.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        .logout-icon {
+            color: #333;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .logout-icon:hover {
+            color: #ff4444;
+            transform: rotate(360deg);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="home.html"><img class="minlogo" src="./pic/min logo.png" alt="Logo">Carmen</a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="my account.html">My Account</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li>
+                <a href="./index.html" onclick="logout(event)">
+                    <i class="fas fa-sign-out-alt logout-icon" title="Log Out"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Account Information Section -->
+    <div class="accounts-section">
+        <h1><i class="fas fa-user"></i> Account Information</h1>
+        <div class="account-info" id="accountInfo">
+            <!-- Account info will be dynamically added here -->
+        </div>
+        <div class="toggle-buttons">
+            <button class="toggle-btn" onclick="toggleSection('favoritesSection', ['accountsSection', 'ordersSection'])">View My Favorites</button>
+            <button class="toggle-btn" onclick="toggleSection('accountsSection', ['favoritesSection', 'ordersSection'])">View My Accounts</button>
+            <button class="toggle-btn" onclick="toggleSection('ordersSection', ['favoritesSection', 'accountsSection'])">View My Orders</button>
+        </div>
+    </div>
+
+    <!-- My Favorites Section -->
+    <div class="accounts-section" id="favoritesSection" style="display: none;">
+        <h1><i class="fas fa-heart"></i> My Favorites</h1>
+        <div class="accounts-grid" id="favoritesGrid">
+            <!-- Favorites will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Registered Accounts Section -->
+    <div class="accounts-section" id="accountsSection" style="display: none;">
+        <h1><i class="fas fa-users"></i> My Accounts</h1>
+        <div class="accounts-grid" id="accountsGrid">
+            <!-- Accounts will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- My Orders Section -->
+    <div class="accounts-section" id="ordersSection" style="display: none;">
+        <h1><i class="fas fa-box"></i> My Orders</h1>
+        <div class="accounts-grid" id="ordersGrid">
+            <!-- Orders will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Carmen</h3>
+                <p>Your one-stop shop for men's and children's clothing.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./home.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kafr-ElDwar</p>
+                <p><i class="fas fa-phone"></i>01211306935</p>
+                <p><i class="fas fa-envelope"></i>carmen@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Carmen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle sidebar on hamburger click
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking a nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Load data when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            displayAccountInfo();
+            displayFavorites();
+            displayAccounts();
+            displayOrders();
+            setupFadeInAnimations();
+        });
+
+        // Fade-in animation on scroll using Intersection Observer
+        function setupFadeInAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('fade-in');
+                        }, index * 200);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('h1, .account-card, .order-card');
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Function to display account information
+        function displayAccountInfo() {
+            const accountInfo = document.getElementById('accountInfo');
+            accountInfo.innerHTML = '';
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (!currentUser) {
+                accountInfo.innerHTML = '<p>Please log in to view your account information.</p>';
+                return;
+            }
+
+            const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+            const userAccount = accounts.find(account => account.email === currentUser.email) || currentUser;
+
+            const infoCard = document.createElement('div');
+            infoCard.classList.add('account-card');
+            infoCard.innerHTML = `
+                <h3>${userAccount.firstName || 'Profile'}</h3>
+                <p><strong>Account:</strong> ${userAccount.email}</p>
+                <button class="logout-btn" onclick="logout(event)">Logout</button>
+            `;
+            accountInfo.appendChild(infoCard);
+        }
+
+        // Function to logout
+        function logout(event) {
+            event.preventDefault(); // Prevent default navigation
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('currentUser');
+                alert("You have been logged out successfully.");
+                window.location.href = "index.html";
+            }
+            // If "Cancel" is clicked, the page remains as is
+        }
+
+        // Function to toggle sections (Favorites, Accounts, or Orders)
+        function toggleSection(showSectionId, hideSectionIds) {
+            const showSection = document.getElementById(showSectionId);
+            showSection.style.display = 'block';
+
+            // Hide the other sections
+            if (Array.isArray(hideSectionIds)) {
+                hideSectionIds.forEach(id => {
+                    const section = document.getElementById(id);
+                    if (section) section.style.display = 'none';
+                });
+            } else {
+                const hideSection = document.getElementById(hideSectionIds);
+                if (hideSection) hideSection.style.display = 'none';
+            }
+        }
+
+        // Function to display favorites
+        function displayFavorites() {
+            const favoritesSection = document.getElementById('favoritesSection');
+            const favoritesGrid = document.getElementById('favoritesGrid');
+            favoritesGrid.innerHTML = '';
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                favoritesSection.style.display = 'none';
+                return;
+            }
+
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const userFavorites = favorites.filter(fav => fav.email === currentUser.email);
+
+            if (userFavorites.length === 0) {
+                favoritesSection.style.display = 'none';
+                return;
+            }
+
+            favoritesSection.style.display = 'block';
+
+            userFavorites.forEach((product, index) => {
+                const globalIndex = favorites.findIndex(fav => fav.email === currentUser.email && fav.name === product.name);
+                const productCard = document.createElement('div');
+                productCard.classList.add('account-card');
+                productCard.dataset.index = globalIndex; // Store the index in the card
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p class="price">$${product.price}</p>
+                    <button class="delete-btn" onclick="deleteFavorite(this)"><i class="fas fa-trash"></i> Remove</button>
+                `;
+                favoritesGrid.appendChild(productCard);
+            });
+        }
+
+        // Function to delete a favorite
+        function deleteFavorite(button) {
+            if (confirm("Are you sure you want to remove this item from your favorites?")) {
+                const card = button.closest('.account-card');
+                const index = card.dataset.index;
+                let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+                if (index >= 0 && index < favorites.length) {
+                    const removedItem = favorites[index];
+                    favorites.splice(index, 1);
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    card.remove();
+                    alert(`${removedItem.name} has been removed from your favorites!`);
+
+                    // Check if there are any favorites left
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    const remainingFavorites = favorites.filter(fav => fav.email === currentUser.email);
+                    if (remainingFavorites.length === 0) {
+                        document.getElementById('favoritesSection').style.display = 'none';
+                    } else {
+                        // Update indices of remaining cards
+                        const remainingCards = document.querySelectorAll('#favoritesGrid .account-card');
+                        remainingCards.forEach((card, i) => {
+                            const globalIndex = favorites.findIndex(fav => fav.email === currentUser.email && fav.name === card.querySelector('h3').textContent);
+                            card.dataset.index = globalIndex;
+                            card.querySelector('.delete-btn').setAttribute('onclick', `deleteFavorite(this)`);
+                        });
+                    }
+                }
+            }
+        }
+
+        // Function to display accounts
+        function displayAccounts() {
+            const accountsSection = document.getElementById('accountsSection');
+            const accountsGrid = document.getElementById('accountsGrid');
+            accountsGrid.innerHTML = '';
+
+            const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+
+            if (accounts.length === 0) {
+                accountsSection.style.display = 'none';
+                return;
+            }
+
+            accountsSection.style.display = 'block';
+
+            accounts.forEach((account, index) => {
+                const accountCard = document.createElement('div');
+                accountCard.classList.add('account-card');
+                accountCard.innerHTML = `
+                    <h3>${account.firstName} ${account.lastName}</h3>
+                    <p><strong>Email:</strong> ${account.email}</p>
+                    <p><strong>Country:</strong> ${account.country}</p>
+                    <p><strong>Address:</strong> ${account.address}</p>
+                    <button class="delete-btn" onclick="deleteAccount(${index})"><i class="fas fa-trash"></i> Delete</button>
+                `;
+                accountsGrid.appendChild(accountCard);
+            });
+        }
+
+        // Function to delete an account
+        function deleteAccount(index) {
+            if (confirm("Are you sure you want to delete this account?")) {
+                const accounts = JSON.parse(localStorage.getItem('accounts'));
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+                if (accounts[index].email === currentUser.email) {
+                    alert("You cannot delete the account you are currently logged in with.");
+                    return;
+                }
+
+                accounts.splice(index, 1);
+                localStorage.setItem('accounts', JSON.stringify(accounts));
+                displayAccounts();
+            }
+        }
+
+        // Function to display orders
+        function displayOrders() {
+            const ordersSection = document.getElementById('ordersSection');
+            const ordersGrid = document.getElementById('ordersGrid');
+            ordersGrid.innerHTML = '';
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                ordersSection.style.display = 'none';
+                return;
+            }
+
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const userOrders = orders.filter(order => order.userEmail === currentUser.email);
+
+            if (userOrders.length === 0) {
+                ordersSection.style.display = 'none';
+                return;
+            }
+
+            ordersSection.style.display = 'block';
+
+            userOrders.forEach((order, index) => {
+                const orderCard = document.createElement('div');
+                orderCard.classList.add('account-card', 'order-card');
+
+                // Format order date
+                const orderDate = new Date(order.date).toLocaleString();
+
+                // Build items list
+                let itemsList = '<ul>';
+                order.items.forEach(item => {
+                    itemsList += `
+                        <li>
+                            ${item.name} - $${item.price} 
+                            ${item.quantity ? `(Qty: ${item.quantity})` : ''}
+                        </li>`;
+                });
+                itemsList += '</ul>';
+
+                orderCard.innerHTML = `
+                    <h3>Order #${index + 1}</h3>
+                    <p><strong>Date:</strong> ${orderDate}</p>
+                    <p><strong>Items:</strong> ${itemsList}</p>
+                    <p><strong>Subtotal:</strong> $${order.subtotal.toFixed(2)}</p>
+                    <p><strong>Tax:</strong> $${order.tax.toFixed(2)}</p>
+                    <p><strong>Delivery Fee:</strong> $${order.deliveryFee.toFixed(2)}</p>
+                    <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+                    <p><strong>Payment Method:</strong> ${order.paymentMethod === 'cash' ? 'Cash on Delivery' : 'Vodafone Cash / InstaPay'}</p>
+                `;
+                ordersGrid.appendChild(orderCard);
+            });
+        }
+    </script>
+</body>
+</html>

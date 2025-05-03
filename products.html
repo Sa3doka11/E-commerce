@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href='./Style/products.css' rel='stylesheet'>
+    <style>
+        /* Additional styles for quick links section */
+        .quick-links-section {
+            padding: 1rem 2rem;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 1rem auto;
+            max-width: 1200px;
+        }
+
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .quick-links a {
+            color: #056ba6;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: #3b3eab;
+        }
+
+        @media (max-width: 768px) {
+            .quick-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="home.html"><img class="minlogo" src="./pic/min logo.png" alt="Logo">Carmen</a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="my account.html">My Account</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li>
+                <a href="./index.html" onclick="logout(event)">
+                    <i class="fas fa-sign-out-alt logout-icon" title="Log Out"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Quick Links Section -->
+    <div class="quick-links-section">
+        <div class="quick-links">
+            <a href="./favorites.html"><i class="fas fa-heart"></i> Go to My Favorites</a>
+            <a href="cart.html"><i class="fas fa-cart-shopping"></i> Go to My Shopping Cart</a>
+        </div>
+    </div>
+
+    <section class="products-page">
+        <!-- Men's Clothing Section -->
+        <div class="category-section">
+            <h2><i class="fas fa-male"></i> Men's Clothing</h2>
+            <div class="products-grid">
+                <div class="product-card" onclick="showProductPopup('Men\'s Casual Shirt', 'Comfortable cotton shirt', 29.99, './pic/casual3.png', 'Men\'s Clothing', 'Available Sizes: S, M, L, XL<br>Material: 100% Cotton<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/casual3.png" alt="Men's Casual Shirt">
+                    <div class="product-card-content">
+                        <h3>Men's Casual Shirt</h3>
+                        <p>Comfortable cotton shirt</p>
+                        <p class="price">$29.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Men\'s Casual Shirt', 'Comfortable cotton shirt', 29.99, './pic/casual3.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Men\'s Casual Shirt', 'Comfortable cotton shirt', 29.99, './pic/casual3.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Men\'s Formal Shirt', 'Elegant formal shirt', 39.99, './pic/formal.png', 'Men\'s Clothing', 'Available Sizes: M, L, XL<br>Material: Cotton Blend<br>Care Instructions: Dry Clean Only')">
+                    <img src="./pic/formal.png" alt="Men's Formal Shirt">
+                    <div class="product-card-content">
+                        <h3>Men's Formal Shirt</h3>
+                        <p>Elegant formal shirt</p>
+                        <p class="price">$39.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Men\'s Formal Shirt', 'Elegant formal shirt', 39.99, './pic/formal.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Men\'s Formal Shirt', 'Elegant formal shirt', 39.99, './pic/formal.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Men\'s Polo Shirt', 'Casual polo shirt', 24.99, './pic/polo 3.png', 'Men\'s Clothing', 'Available Sizes: S, M, L<br>Material: Polyester Blend<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/polo 3.png" alt="Men's Polo Shirt">
+                    <div class="product-card-content">
+                        <h3>Men's Polo Shirt</h3>
+                        <p>Casual polo shirt</p>
+                        <p class="price">$24.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Men\'s Polo Shirt', 'Casual polo shirt', 24.99, './pic/polo 3.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Men\'s Polo Shirt', 'Casual polo shirt', 24.99, './pic/polo 3.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Men\'s Jacket', 'Stylish winter jacket', 59.99, './pic/ch jacket 3.png', 'Men\'s Clothing', 'Available Sizes: M, L, XL<br>Material: Wool Blend<br>Care Instructions: Dry Clean Only')">
+                    <img src="./pic/ch jacket 3.png" alt="Men's Jacket">
+                    <div class="product-card-content">
+                        <h3>Men's Jacket</h3>
+                        <p>Stylish winter jacket</p>
+                        <p class="price">$59.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Men\'s Jacket', 'Stylish winter jacket', 59.99, './pic/ch jacket 3.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Men\'s Jacket', 'Stylish winter jacket', 59.99, './pic/ch jacket 3.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Men\'s Jeans', 'Slim-fit denim jeans', 49.99, './pic/men j.png', 'Men\'s Clothing', 'Available Sizes: 30, 32, 34, 36<br>Material: Denim<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/men j.png" alt="Men's Jeans">
+                    <div class="product-card-content">
+                        <h3>Men's Jeans</h3>
+                        <p>Slim-fit denim jeans</p>
+                        <p class="price">$49.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Men\'s Jeans', 'Slim-fit denim jeans', 49.99, './pic/men j.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Men\'s Jeans', 'Slim-fit denim jeans', 49.99, './pic/men j.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Men\'s Shorts', 'Comfortable casual shorts', 19.99, './pic/Shorts 1.png', 'Men\'s Clothing', 'Available Sizes: S, M, L<br>Material: Cotton Blend<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/Shorts 1.png" alt="Men's Shorts">
+                    <div class="product-card-content">
+                        <h3>Men's Shorts</h3>
+                        <p>Comfortable casual shorts</p>
+                        <p class="price">$19.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Men\'s Shorts', 'Comfortable casual shorts', 19.99, './pic/Shorts 1.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Men\'s Shorts', 'Comfortable casual shorts', 19.99, './pic/Shorts 1.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Men\'s Hoodie', 'Warm and cozy hoodie', 44.99, './pic/ho 4.png', 'Men\'s Clothing', 'Available Sizes: S, M, L, XL<br>Material: Fleece<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/ho 4.png" alt="Men's Hoodie">
+                    <div class="product-card-content">
+                        <h3>Men's Hoodie</h3>
+                        <p>Warm and cozy hoodie</p>
+                        <p class="price">$44.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Men\'s Hoodie', 'Warm and cozy hoodie', 44.99, './pic/ho 4.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Men\'s Hoodie', 'Warm and cozy hoodie', 44.99, './pic/ho 4.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Children's Clothing Section -->
+        <div class="category-section">
+            <h2><i class="fas fa-child"></i> Children's Clothing</h2>
+            <div class="products-grid">
+                <div class="product-card" onclick="showProductPopup('Children\'s Jacket', 'Warm winter jacket', 39.99, './pic/ch j1.png', 'Children\'s Clothing', 'Available Sizes: 4-5Y, 6-7Y, 8-9Y<br>Material: Polyester<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/ch j1.png" alt="Children's Jacket">
+                    <div class="product-card-content">
+                        <h3>Children's Jacket</h3>
+                        <p>Warm winter jacket</p>
+                        <p class="price">$39.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Children\'s Jacket', 'Warm winter jacket', 39.99, './pic/ch j1.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Children\'s Jacket', 'Warm winter jacket', 39.99, './pic/ch j1.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Children\'s T-Shirt', 'Soft cotton t-shirt', 14.99, './pic/chSh.png', 'Children\'s Clothing', 'Available Sizes: 3-4Y, 5-6Y, 7-8Y<br>Material: 100% Cotton<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/chSh.png" alt="Children's T-Shirt">
+                    <div class="product-card-content">
+                        <h3>Children's T-Shirt</h3>
+                        <p>Soft cotton t-shirt</p>
+                        <p class="price">$14.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Children\'s T-Shirt', 'Soft cotton t-shirt', 14.99, './pic/chSh.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Children\'s T-Shirt', 'Soft cotton t-shirt', 14.99, './pic/chSh.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Children\'s Jeans', 'Durable denim jeans', 24.99, './pic/chJe.png', 'Children\'s Clothing', 'Available Sizes: 5-6Y, 7-8Y, 9-10Y<br>Material: Denim<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/chJe.png" alt="Children's Jeans">
+                    <div class="product-card-content">
+                        <h3>Children's Jeans</h3>
+                        <p>Durable denim jeans</p>
+                        <p class="price">$24.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Children\'s Jeans', 'Durable denim jeans', 24.99, './pic/chJe.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Children\'s Jeans', 'Durable denim jeans', 24.99, './pic/chJe.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Children\'s Hoodie', 'Cozy hoodie for kids', 29.99, './pic/chHo.png', 'Children\'s Clothing', 'Available Sizes: 4-5Y, 6-7Y, 8-9Y<br>Material: Fleece<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/chHo.png" alt="Children's Hoodie">
+                    <div class="product-card-content">
+                        <h3>Children's Hoodie</h3>
+                        <p>Cozy hoodie for kids</p>
+                        <p class="price">$29.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Children\'s Hoodie', 'Cozy hoodie for kids', 29.99, './pic/chHo.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Children\'s Hoodie', 'Cozy hoodie for kids', 29.99, './pic/chHo.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="showProductPopup('Children\'s Shorts', 'Lightweight shorts', 12.99, './pic/chShort.png', 'Children\'s Clothing', 'Available Sizes: 3-4Y, 5-6Y, 7-8Y<br>Material: Cotton Blend<br>Care Instructions: Machine Washable')">
+                    <img src="./pic/chShort.png" alt="Children's Shorts">
+                    <div class="product-card-content">
+                        <h3>Children's Shorts</h3>
+                        <p>Lightweight shorts</p>
+                        <p class="price">$12.99</p>
+                        <div class="product-actions">
+                            <button class="cart-btn" onclick="event.stopPropagation(); addToCart('Children\'s Shorts', 'Lightweight shorts', 12.99, './pic/chShort.png')"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                            <button class="fav-btn" onclick="event.stopPropagation(); addToFavorites('Children\'s Shorts', 'Lightweight shorts', 12.99, './pic/chShort.png')"><i class="fas fa-heart"></i> Fav</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Popup -->
+    <div id="productPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeProductPopup()">×</span>
+            <div class="popup-body">
+                <img id="popupImage" src="" alt="Product Image">
+                <div class="popup-details">
+                    <h3 id="popupName"></h3>
+                    <p id="popupDescription"></p>
+                    <p id="popupCategory" class="category"></p>
+                    <p id="popupPrice" class="price"></p>
+                    <div id="popupExtraDetails"></div>
+                    <div class="popup-actions">
+                        <button id="popupCartBtn" class="cart-btn"><i class="fas fa-cart-shopping"></i> Add to Cart</button>
+                        <button id="popupFavBtn" class="fav-btn"><i class="fas fa-heart"></i> Fav</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popupOverlay" class="overlay"></div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Carmen</h3>
+                <p>Your one-stop shop for men's and children's clothing.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./home.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kafr-ElDwar</p>
+                <p><i class="fas fa-phone"></i>01211306935</p>
+                <p><i class="fas fa-envelope"></i>carmen@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Carmen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle sidebar on hamburger click
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking a nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Load animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupFadeInAnimations();
+        });
+
+        // Fade-in animation on scroll using Intersection Observer
+        function setupFadeInAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('fade-in');
+                        }, index * 200);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('h2, .product-card');
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Functions for adding to cart and favorites
+        function addToCart(name, description, price, image) {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert("Please log in to add items to your cart!");
+                window.location.href = "registration.html";
+                return;
+            }
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const product = { name, description, price, image, email: currentUser.email };
+
+            if (cart.some(item => item.name === name && item.email === currentUser.email)) {
+                alert("This product is already in your cart!");
+                return;
+            }
+
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${name} has been added to your cart!`);
+        }
+
+        function addToFavorites(name, description, price, image) {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert("Please log in to add items to your favorites!");
+                window.location.href = "registration.html";
+                return;
+            }
+
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const product = { name, description, price, image, email: currentUser.email };
+
+            if (favorites.some(item => item.name === name && item.email === currentUser.email)) {
+                alert("This product is already in your favorites!");
+                return;
+            }
+
+            favorites.push(product);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            alert(`${name} has been added to your favorites!`);
+        }
+
+        // Show Product Popup
+        function showProductPopup(name, description, price, image, category, extraDetails) {
+            const popup = document.getElementById('productPopup');
+            const overlay = document.getElementById('popupOverlay');
+            const popupImage = document.getElementById('popupImage');
+            const popupName = document.getElementById('popupName');
+            const popupDescription = document.getElementById('popupDescription');
+            const popupCategory = document.getElementById('popupCategory');
+            const popupPrice = document.getElementById('popupPrice');
+            const popupExtraDetails = document.getElementById('popupExtraDetails');
+            const cartBtn = document.getElementById('popupCartBtn');
+            const favBtn = document.getElementById('popupFavBtn');
+
+            popupImage.src = image;
+            popupImage.alt = name;
+            popupName.textContent = name;
+            popupDescription.textContent = description;
+            popupCategory.innerHTML = `<strong>Category:</strong> ${category}`;
+            popupPrice.textContent = `$${price}`;
+            popupExtraDetails.innerHTML = extraDetails;
+
+            cartBtn.onclick = () => {
+                addToCart(name, description, price, image);
+            };
+            favBtn.onclick = () => {
+                addToFavorites(name, description, price, image);
+            };
+
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        // Close Product Popup
+        function closeProductPopup() {
+            const popup = document.getElementById('productPopup');
+            const overlay = document.getElementById('popupOverlay');
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        // Close popup when clicking on overlay
+        document.getElementById('popupOverlay').addEventListener('click', closeProductPopup);
+
+        // Function to logout
+        function logout(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('currentUser');
+                alert("You have been logged out successfully.");
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</body>
+</html>

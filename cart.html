@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link href='./Style/cart.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quantity-btn {
+            background-color: #056ba6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .quantity-btn:hover {
+            background-color: #45a049;
+        }
+        .quantity-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .quantity-display {
+            font-size: 1rem;
+            color: #3b3eab;
+            width: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="home.html"><img class="minlogo" src="./pic/min logo.png" alt="Logo">Carmen</a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="my account.html">My Account</a></li>
+            <li><a href="about.html">Finished Orders</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li>
+                <a href="./index.html" onclick="logout()">
+                    <i class="fas fa-sign-out-alt logout-icon" title="Log Out"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="cart-section">
+        <h1><i class="fas fa-shopping-cart"></i> My Cart</h1>
+        <div class="cart-grid" id="cartGrid">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-total">
+            <h3>Subtotal: $<span id="subtotal">0.00</span></h3>
+            <h3>Tax (14%): $<span id="tax">0.00</span></h3>
+            <h3>Delivery Fee: $<span id="deliveryFee">0.00</span></h3>
+            <h3>Total: $<span id="cartTotal">0.00</span></h3>
+            <div class="payment-options">
+                <h3>Select Payment Method:</h3>
+                <label>
+                    <input type="radio" name="paymentMethod" value="cash" onclick="updateTotal()"> Cash on Delivery
+                </label>
+                <label>
+                    <input type="radio" name="paymentMethod" value="electronic" onclick="updateTotal()"> Vodafone Cash / InstaPay
+                </label>
+            </div>
+            <button class="checkout-btn" onclick="proceedToCheckout()"><i class="fas fa-check"></i> Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Carmen</h3>
+                <p>Your one-stop shop for men's and children's clothing.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./home.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kafr-ElDwar</p>
+                <p><i class="fas fa-phone"></i>01211306935</p>
+                <p><i class="fas fa-envelope"></i>carmen@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Carmen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle sidebar on hamburger click
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking a nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        const TAX_RATE = 0.14; // 14% tax
+        const DELIVERY_FEE = 5.00; // $5 delivery fee for cash on delivery
+
+        // Load cart items and animations when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            displayCart();
+            setupFadeInAnimations();
+        });
+
+        // Fade-in animation on scroll using Intersection Observer
+        function setupFadeInAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('fade-in');
+                        }, index * 200);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('h1, .cart-item, .cart-total');
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Function to display cart items
+        function displayCart() {
+            const cartGrid = document.getElementById('cartGrid');
+            const subtotalElement = document.getElementById('subtotal');
+            const taxElement = document.getElementById('tax');
+            const deliveryFeeElement = document.getElementById('deliveryFee');
+            const cartTotalElement = document.getElementById('cartTotal');
+            cartGrid.innerHTML = ''; // Clear existing items
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                cartGrid.innerHTML = '<p>Please log in to view your cart.</p>';
+                subtotalElement.textContent = '0.00';
+                taxElement.textContent = '0.00';
+                deliveryFeeElement.textContent = '0.00';
+                cartTotalElement.textContent = '0.00';
+                return;
+            }
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const userCart = cart.filter(item => item.email === currentUser.email);
+
+            if (userCart.length === 0) {
+                cartGrid.innerHTML = '<p>Your cart is empty.</p>';
+                subtotalElement.textContent = '0.00';
+                taxElement.textContent = '0.00';
+                deliveryFeeElement.textContent = '0.00';
+                cartTotalElement.textContent = '0.00';
+                return;
+            }
+
+            let subtotal = 0;
+            userCart.forEach((product, index) => {
+                // Add quantity if not present
+                if (!product.quantity) {
+                    product.quantity = 1;
+                }
+                const globalIndex = cart.findIndex(item => item.name === product.name && item.email === currentUser.email);
+                const productCard = document.createElement('div');
+                productCard.classList.add('cart-item');
+                productCard.dataset.index = globalIndex;
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="cart-item-content">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p class="price">$${ (product.price * product.quantity).toFixed(2) }</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(${globalIndex}, -1)">-</button>
+                            <span class="quantity-display">${product.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${globalIndex}, 1)">+</button>
+                        </div><br>
+                        <button class="delete-btn" onclick="removeFromCart(this)"><i class="fas fa-trash"></i> Remove</button>
+                    </div>
+                `;
+                cartGrid.appendChild(productCard);
+                subtotal += product.price * product.quantity;
+            });
+
+            // Save updated cart with quantities
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Update totals
+            subtotalElement.textContent = subtotal.toFixed(2);
+            const tax = subtotal * TAX_RATE;
+            taxElement.textContent = tax.toFixed(2);
+            updateTotal(); // Update delivery fee and total based on payment method
+        }
+
+        // Function to update quantity
+        function updateQuantity(index, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const product = cart[index];
+
+            if (!product) return;
+
+            product.quantity = (product.quantity || 1) + change;
+            if (product.quantity < 1) {
+                product.quantity = 1; // Prevent quantity from going below 1
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Update the UI for the specific product
+            const productCard = document.querySelector(`.cart-item[data-index="${index}"]`);
+            if (productCard) {
+                const priceElement = productCard.querySelector('.price');
+                const quantityElement = productCard.querySelector('.quantity-display');
+                priceElement.textContent = `$${(product.price * product.quantity).toFixed(2)}`;
+                quantityElement.textContent = product.quantity;
+            }
+
+            // Recalculate totals
+            updateCartTotals();
+        }
+
+        // Function to update cart totals
+        function updateCartTotals() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const userCart = cart.filter(item => item.email === currentUser.email);
+
+            let subtotal = 0;
+            userCart.forEach(product => {
+                subtotal += product.price * (product.quantity || 1);
+            });
+
+            const subtotalElement = document.getElementById('subtotal');
+            const taxElement = document.getElementById('tax');
+            subtotalElement.textContent = subtotal.toFixed(2);
+            const tax = subtotal * TAX_RATE;
+            taxElement.textContent = tax.toFixed(2);
+            updateTotal();
+        }
+
+        // Function to update total based on payment method
+        function updateTotal() {
+            const subtotal = parseFloat(document.getElementById('subtotal').textContent);
+            const tax = parseFloat(document.getElementById('tax').textContent);
+            const deliveryFeeElement = document.getElementById('deliveryFee');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+            let deliveryFee = 0;
+
+            if (paymentMethod && paymentMethod.value === 'cash') {
+                deliveryFee = DELIVERY_FEE;
+            }
+
+            deliveryFeeElement.textContent = deliveryFee.toFixed(2);
+            const total = subtotal + tax + deliveryFee;
+            cartTotalElement.textContent = total.toFixed(2);
+        }
+
+        // Function to remove an item from cart
+        function removeFromCart(button) {
+            if (confirm("Are you sure you want to remove this item from your cart?")) {
+                const card = button.closest('.cart-item');
+                const index = card.dataset.index;
+                let cart = JSON.parse(localStorage.getItem('cart'));
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                card.remove();
+                alert("Item removed successfully!");
+
+                // Check if cart is empty
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                const userCart = cart.filter(item => item.email === currentUser.email);
+                if (userCart.length === 0) {
+                    const cartGrid = document.getElementById('cartGrid');
+                    cartGrid.innerHTML = '<p>Your cart is empty.</p>';
+                    document.getElementById('subtotal').textContent = '0.00';
+                    document.getElementById('tax').textContent = '0.00';
+                    document.getElementById('deliveryFee').textContent = '0.00';
+                    document.getElementById('cartTotal').textContent = '0.00';
+                } else {
+                    // Update indices of remaining items
+                    const remainingCards = document.querySelectorAll('.cart-item');
+                    remainingCards.forEach((card, i) => {
+                        const globalIndex = cart.findIndex(item => item.name === card.querySelector('h3').textContent && item.email === currentUser.email);
+                        card.dataset.index = globalIndex;
+                        card.querySelector('.delete-btn').setAttribute('onclick', `removeFromCart(this)`);
+                        card.querySelectorAll('.quantity-btn')[0].setAttribute('onclick', `updateQuantity(${globalIndex}, -1)`);
+                        card.querySelectorAll('.quantity-btn')[1].setAttribute('onclick', `updateQuantity(${globalIndex}, 1)`);
+                    });
+                    updateCartTotals();
+                }
+            }
+        }
+
+        // Function to proceed to checkout
+        function proceedToCheckout() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert("Please log in to proceed with your order!");
+                window.location.href = "registration.html";
+                return;
+            }
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const userCart = cart.filter(item => item.email === currentUser.email);
+
+            if (userCart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+            if (!paymentMethod) {
+                alert("Please select a payment method!");
+                return;
+            }
+
+            // Create order
+            const order = {
+                userEmail: currentUser.email,
+                items: userCart,
+                subtotal: parseFloat(document.getElementById('subtotal').textContent),
+                tax: parseFloat(document.getElementById('tax').textContent),
+                deliveryFee: parseFloat(document.getElementById('deliveryFee').textContent),
+                total: parseFloat(document.getElementById('cartTotal').textContent),
+                paymentMethod: paymentMethod.value,
+                date: new Date().toISOString()
+            };
+
+            // Save order to localStorage
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // Remove user's items from cart
+            const updatedCart = cart.filter(item => item.email !== currentUser.email);
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+            alert("Order placed successfully!");
+            window.location.href = "orders.html";
+        }
+
+        // Function to logout
+        function logout() {
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('currentUser');
+                alert("You have been logged out successfully.");
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</body>
+</html>

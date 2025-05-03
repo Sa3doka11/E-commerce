@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href='./Style/registration.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="home.html"><img class="minlogo" src="./pic/min logo.png" alt="Logo">Carmen</a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="./my account.html">My Account</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="Categories.html">Categories</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li>
+                <a href="./index.html" onclick="logout(event)">
+                    <i class="fas fa-sign-out-alt logout-icon" title="Log Out"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="registration-container">
+        <h1>Create Your Account</h1>
+        <form id="registrationForm">
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="firstName"><i class="fas fa-user"></i> First Name</label>
+                    <input type="text" id="firstName" name="firstName" required placeholder="First Name">
+                </div>
+                <div class="input-group">
+                    <label for="lastName"><i class="fas fa-user"></i> Last Name</label>
+                    <input type="text" id="lastName" name="lastName" required placeholder="Last Name">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="Email Address">
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Password">
+                </div>
+                <div class="input-group">
+                    <label for="repeatPassword"><i class="fas fa-lock"></i> Repeat Password</label>
+                    <input type="password" id="repeatPassword" name="repeatPassword" required placeholder="Repeat Password">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="country"><i class="fas fa-globe"></i> Country</label>
+                    <select id="country" name="country" required>
+                        <option value="">Select Country</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="UAE">UAE</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="address"><i class="fas fa-map-marker-alt"></i> Address</label>
+                    <input type="text" id="address" name="address" required placeholder="Address">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Register</button>
+            <p class="login-link">Already have an account? <a href="my account.html">Login</a></p>
+        </form>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Carmen</h3>
+                <p>Your one-stop shop for men's and children's clothing.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./home.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kafr-ElDwar</p>
+                <p><i class="fas fa-phone"></i>01211306935</p>
+                <p><i class="fas fa-envelope"></i>carmen@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Carmen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle sidebar on hamburger click
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking a nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Fade-in animation on scroll using Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('fade-in');
+                    }, index * 200); // Delay each element by 200ms for a staggered effect
+                    observer.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, observerOptions);
+
+        // Select elements to animate (h1, input-group)
+        const elementsToAnimate = document.querySelectorAll('h1, .input-group');
+        elementsToAnimate.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Handle form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize accounts if not exists
+            if (!localStorage.getItem('accounts')) {
+                localStorage.setItem('accounts', JSON.stringify([]));
+            }
+
+            document.getElementById('registrationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const repeatPassword = document.getElementById('repeatPassword').value;
+                const country = document.getElementById('country').value;
+                const address = document.getElementById('address').value;
+
+                // Validate password match
+                if (password !== repeatPassword) {
+                    alert("Passwords do not match!");
+                    return;
+                }
+
+                // Get existing accounts
+                const accounts = JSON.parse(localStorage.getItem('accounts'));
+
+                // Check if email already exists
+                if (accounts.some(account => account.email === email)) {
+                    alert("This email is already registered!");
+                    return;
+                }
+
+                // Create new account object
+                const newAccount = {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    country,
+                    address
+                };
+
+                // Add new account to accounts array
+                accounts.push(newAccount);
+                localStorage.setItem('accounts', JSON.stringify(accounts));
+
+                // Reset the form
+                this.reset();
+
+                alert("Account created successfully! Check your accounts in My Account page.");
+                // Redirect to My Account page
+                window.location.href = "my account.html";
+            });
+        });
+
+        // Function to logout
+        function logout(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('currentUser');
+                alert("You have been logged out successfully.");
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</body>
+</html>

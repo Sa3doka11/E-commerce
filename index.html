@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Sign</title>
+    <link href='./Style/sign.css' rel='stylesheet'>
+    <!-- Add Boxicons for social media icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html"><img class="minlogo" src="./pic/min logo.png" alt="Logo">Carmen</a>
+        </div>
+        <ul class="nav-links">
+
+        </ul>
+    </nav>
+
+    <div class="container" id="authContainer">
+        <div class="form-box login">
+            <form id="loginForm">
+                <h1>Sign In</h1>
+                <div class="input-box">
+                    <input type="text" placeholder="Username/Email" required id="loginEmail">
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" required id="loginPassword">
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="forgot-link">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">Sign In</button>
+                <p>or sign in with social platforms</p>
+                <div class="social-icons">
+                    <a href="https://accounts.google.com/signin" target="_blank"><i class='bx bxl-google'></i></a>
+                    <a href="https://www.facebook.com/login" target="_blank"><i class='bx bxl-facebook'></i></a>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register">
+            <form id="registerForm">
+                <h1>Sign Up</h1>
+                <div class="input-box">
+                    <input type="text" placeholder="Username/Email" required id="registerEmail">
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" required id="registerPassword">
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Confirm Password" required id="registerRePassword">
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+                <p>or sign with social platforms</p>
+                <div class="social-icons">
+                    <a href="https://accounts.google.com/signin" target="_blank"><i class='bx bxl-google'></i></a>
+                    <a href="https://www.facebook.com/login" target="_blank"><i class='bx bxl-facebook'></i></a>
+                </div>
+            </form>
+        </div>
+
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Dear!</h1>
+                <p>Don't have an account?</p>
+                <button type="button" class="btn register-btn" id="showRegister">Sign Up</button>
+            </div>
+
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account?</p>
+                <button type="button" class="btn login-btn" id="showLogin">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between forms
+        const container = document.getElementById('authContainer');
+        const showRegister = document.getElementById('showRegister');
+        const showLogin = document.getElementById('showLogin');
+
+        showRegister.addEventListener('click', () => {
+            container.classList.add('active');
+        });
+
+        showLogin.addEventListener('click', () => {
+            container.classList.remove('active');
+        });
+
+        // User authentication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize users if not exists
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify([]));
+            }
+
+            // Handle registration
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerRePassword').value;
+
+                // Validate
+                if (password !== confirmPassword) {
+                    alert("Passwords don't match!");
+                    return;
+                }
+
+                const users = JSON.parse(localStorage.getItem('users'));
+                const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+                
+                // Check if email is already registered in users or accounts
+                if (users.some(user => user.email === email) || accounts.some(account => account.email === email)) {
+                    alert("Email already registered!");
+                    return;
+                }
+
+                // Register user
+                users.push({ email, password });
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                alert("Registration successful! Please login.");
+                container.classList.remove('active');
+                this.reset();
+            });
+
+            // Handle login
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                // Check accounts from registration.html
+                const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+
+                // Check if the user exists in accounts or users
+                const account = accounts.find(account => account.email === email && account.password === password);
+                const user = users.find(user => user.email === email && user.password === password);
+
+                if (account) {
+                    localStorage.setItem('currentUser', JSON.stringify(account));
+                    window.location.href = "home.html";
+                } else if (user) {
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    window.location.href = "home.html";
+                } else {
+                    alert("Invalid email or password!");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

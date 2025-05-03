@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href='./Style/about.css' rel='stylesheet'>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="home.html"><img class="minlogo" src="./pic/min logo.png" alt="Logo">Carmen</a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="./my account.html">My Account</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li>
+                <a href="./index.html" onclick="logout()">
+                    <i class="fas fa-sign-out-alt logout-icon" title="Log Out"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="about-section">
+        <h1>About Us</h1>
+        <p>Carmen is a premier retailer specializing in men's and children's clothing, offering a wide range of sizes and styles to suit every need. We are dedicated to providing high-quality, fashionable apparel that makes you feel confident and comfortable. Our journey began with a vision to redefine fashion for men and children by combining style, comfort, and affordability in every piece we create.</p>
+        <p>At Carmen, we believe that clothing is more than just fabric—it's an expression of personality and a way to celebrate life's moments. Whether you're dressing up for a special occasion or looking for everyday essentials, our curated collections are designed to meet your needs with elegance and practicality. We take pride in our meticulous attention to detail, ensuring that every stitch and seam reflects our commitment to excellence.</p>
+        <p>We are also committed to sustainability and ethical practices. By partnering with eco-friendly suppliers and using sustainable materials wherever possible, we strive to minimize our environmental impact while delivering the best to our customers. At Carmen, we aim to dress the future generation with care, both for them and for the planet.</p>
+
+        <h2>Meet Our Team</h2>
+        <div class="team-list">
+            <div class="team-member-card">
+                <h4>Saad Abd El-Samei Mohamed</h4>
+                <p class="role">Founder & CEO</p>
+                <p>Saad leads Carmen with a vision for innovation and quality in fashion.</p>
+            </div>
+            <div class="team-member-card">
+                <h4>Mohamed Gamal Mohamed</h4>
+                <p class="role">Head of Design</p>
+                <p>Mohamed brings creativity and style to every collection at Carmen.</p>
+            </div>
+            <div class="team-member-card">
+                <h4>Mahmoud Mohsen Ali El-Saftawy</h4>
+                <p class="role">Marketing Director</p>
+                <p>Mahmoud ensures Carmen reaches every corner of the world.</p>
+            </div>
+            <div class="team-member-card">
+                <h4>Esraa Ali Ahmed Sleem</h4>
+                <p class="role">Operations Manager</p>
+                <p>Esraa keeps our operations running smoothly and efficiently.</p>
+            </div>
+            <div class="team-member-card">
+                <h4>Ro'ya Ahmed Mohamed Anwar</h4>
+                <p class="role">Customer Experience Lead</p>
+                <p>Ro'ya ensures every customer has a delightful shopping experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Carmen</h3>
+                <p>Your one-stop shop for men's and children's clothing.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./home.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kafr-ElDwar</p>
+                <p><i class="fas fa-phone"></i>01211306935</p>
+                <p><i class="fas fa-envelope"></i>carmen@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Carmen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle sidebar on hamburger click
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking a nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Logout function (assuming it exists elsewhere)
+        function logout() {
+            localStorage.removeItem('currentUser');
+            alert('You have been logged out.');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - Carmen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href='./Style/favorites.css' rel='stylesheet'>
+    <style>
+        .favorites-page {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .favorites-section {
+            margin-bottom: 3rem;
+        }
+
+        .favorites-section h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b3eab;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .favorites-section h2 i {
+            color: #056ba6;
+        }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .favorite-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .favorite-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .favorite-card h3 {
+            font-size: 1.1rem;
+            color: #3b3eab;
+            margin: 0.5rem 0;
+        }
+
+        .favorite-card p {
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .favorite-card .price {
+            color: #056ba6;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+
+        .favorite-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .remove-btn, .cart-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .remove-btn:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .cart-btn {
+            background-color: #056ba6;
+            color: white;
+        }
+
+        .cart-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .cart-btn i, .remove-btn i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .favorites-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .favorites-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .favorites-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .favorite-card img {
+                height: 140px;
+            }
+        }
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    background-image: url(../pic/registCover.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 60px; /* Prevent content overlap with fixed navbar */
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #8297d0;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo a {
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.minlogo {
+    width: 6%;
+    margin-right: 0.5rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    white-space: nowrap;
+    padding: 0.5rem 0;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #056ba6;
+}
+
+/* Styling for the logout icon */
+.logout-icon {
+    color: #333;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.logout-icon:hover {
+    color: #ff4444;
+    transform: rotate(360deg);
+}
+
+/* Hamburger menu styles */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile sidebar styles */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -250px; /* Hidden by default */
+        width: 250px;
+        height: 100vh;
+        background-color: #8297d0;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 60px;
+        transition: right 0.3s ease;
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        right: 0; /* Show sidebar */
+    }
+
+    .nav-links li {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .nav-links a {
+        font-size: 18px;
+    }
+}
+
+/* Footer */
+.footer {
+    background-color: #2d3436;
+    color: white;
+    padding: 3rem 2rem;
+    margin-top: auto;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.footer-column p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-column ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #056ba6;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.2rem;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #056ba6;
+}
+
+.footer-column p i {
+    margin-right: 0.5rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    font-size: 0.9rem;
+    color: white;
+}
+
+/* Responsive Design for Footer */
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+/* Fade-in Animation */
+.favorite-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="home.html"><img class="minlogo" src="./pic/min logo.png" alt="Logo">Carmen</a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="my account.html">My Account</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li>
+                <a href="./index.html" onclick="logout(event)">
+                    <i class="fas fa-sign-out-alt logout-icon" title="Log Out"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="favorites-page">
+        <div class="favorites-section">
+            <h2><i class="fas fa-heart"></i> My Favorites</h2>
+            <div class="favorites-grid" id="favoritesGrid">
+                <!-- Favorites will be dynamically populated here -->
+            </div>
+            <p id="noFavorites" style="text-align: center; color: #555; display: none;">No items in favorites yet.</p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Carmen</h3>
+                <p>Your one-stop shop for men's and children's clothing.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./home.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kafr-ElDwar</p>
+                <p><i class="fas fa-phone"></i>01211306935</p>
+                <p><i class="fas fa-envelope"></i>carmen@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Carmen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle sidebar on hamburger click
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking a nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Load animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupFadeInAnimations();
+            loadFavorites();
+        });
+
+        // Fade-in animation on scroll using Intersection Observer
+        function setupFadeInAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('fade-in');
+                        }, index * 200);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('.favorite-card');
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Load favorites from localStorage
+        function loadFavorites() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert("Please log in to view your favorites!");
+                window.location.href = "registration.html";
+                return;
+            }
+
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const userFavorites = favorites.filter(item => item.email === currentUser.email);
+            const favoritesGrid = document.getElementById('favoritesGrid');
+            const noFavorites = document.getElementById('noFavorites');
+
+            favoritesGrid.innerHTML = ''; // Clear existing content
+
+            if (userFavorites.length === 0) {
+                noFavorites.style.display = 'block';
+                return;
+            }
+
+            userFavorites.forEach((item, localIndex) => {
+                const globalIndex = favorites.findIndex(fav => fav.name === item.name && fav.email === currentUser.email);
+                if (globalIndex === -1) return; // Skip if index not found
+                const card = document.createElement('div');
+                card.className = 'favorite-card';
+                card.dataset.index = globalIndex; // Store index in dataset
+                card.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>${item.description}</p>
+                    <p class="price">$${item.price}</p>
+                    <div class="favorite-actions">
+                        <button class="remove-btn" onclick="removeFavorite(this)"><i class="fas fa-trash"></i> Remove</button>
+                        <button class="cart-btn" onclick="moveToCart(this)"><i class="fas fa-cart-shopping"></i> Move to Cart</button>
+                    </div>
+                `;
+                favoritesGrid.appendChild(card);
+            });
+        }
+
+        // Remove product from favorites
+        function removeFavorite(button) {
+            const card = button.closest('.favorite-card');
+            const index = card.dataset.index;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+            if (index >= 0 && index < favorites.length) {
+                const removedItem = favorites[index];
+                favorites.splice(index, 1);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                card.remove();
+                alert(`${removedItem.name} has been removed from your favorites!`);
+
+                const remainingFavorites = favorites.filter(item => item.email === currentUser.email);
+                if (remainingFavorites.length === 0) {
+                    document.getElementById('noFavorites').style.display = 'block';
+                } else {
+                    loadFavorites(); // Reload to ensure correct indexing
+                }
+            } else {
+                console.error("Invalid index for removal:", index);
+            }
+        }
+
+        // Move product to shopping cart
+        function moveToCart(button) {
+            const card = button.closest('.favorite-card');
+            const index = card.dataset.index;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert("Please log in to move items to your cart!");
+                window.location.href = "registration.html";
+                return;
+            }
+
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const item = favorites[index];
+
+            if (!item) {
+                console.error("Item not found at index:", index);
+                return;
+            }
+
+            const product = { name: item.name, description: item.description, price: item.price, image: item.image, email: currentUser.email };
+
+            // Check if product already exists in cart
+            if (cart.some(item => item.name === product.name && item.email === currentUser.email)) {
+                alert("This product is already in your cart!");
+                return;
+            }
+
+            // Add to cart
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Remove from favorites
+            favorites.splice(index, 1);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            card.remove();
+            alert(`${item.name} has been moved to your cart!`);
+
+            const remainingFavorites = favorites.filter(item => item.email === currentUser.email);
+            if (remainingFavorites.length === 0) {
+                document.getElementById('noFavorites').style.display = 'block';
+            } else {
+                loadFavorites(); // Reload to fix any indexing issues
+            }
+
+            // Redirect to cart page (optional, uncomment if desired)
+            window.location.href = "cart.html";
+        }
+
+        // Function to logout
+        function logout(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('currentUser');
+                alert("You have been logged out successfully.");
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</body>
+</html>

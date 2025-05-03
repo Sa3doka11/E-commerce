@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link href='./Style/orders.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="home.html"><img class="minlogo" src="./pic/min logo.png" alt="Logo">Carmen</a>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="my account.html">My Account</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li>
+                <a href="./index.html" onclick="logout(event)">
+                    <i class="fas fa-sign-out-alt logout-icon" title="Log Out"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="orders-section">
+        <h1><i class="fas fa-shipping-fast"></i> My Orders</h1>
+        <div class="orders-grid" id="ordersGrid">
+            <!-- Orders will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Carmen</h3>
+                <p>Your one-stop shop for men's and children's clothing.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./home.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kafr-ElDwar</p>
+                <p><i class="fas fa-phone"></i>01211306935</p>
+                <p><i class="fas fa-envelope"></i>carmen@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Carmen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle sidebar on hamburger click
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking a nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Load orders when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            displayOrders();
+            setupFadeInAnimations();
+        });
+
+        // Fade-in animation on scroll using Intersection Observer
+        function setupFadeInAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('fade-in');
+                        }, index * 200);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('h1, .order-card');
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Function to display orders
+        function displayOrders() {
+            const ordersGrid = document.getElementById('ordersGrid');
+            ordersGrid.innerHTML = '';
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                ordersGrid.innerHTML = '<p>Please log in to view your orders.</p>';
+                return;
+            }
+
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const userOrders = orders.filter(order => order.userEmail === currentUser.email);
+
+            if (userOrders.length === 0) {
+                ordersGrid.innerHTML = '<p>No orders placed yet.</p>';
+                return;
+            }
+
+            userOrders.forEach((order, index) => {
+                const orderCard = document.createElement('div');
+                orderCard.classList.add('order-card');
+                let itemsHTML = '';
+                order.items.forEach(item => {
+                    itemsHTML += `
+                        <div class="order-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div>
+                                <h4>${item.name}</h4>
+                                <p>${item.description}</p>
+                                <p class="price">$${item.price}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                orderCard.innerHTML = `
+                    <h3>Order #${index + 1} - ${new Date(order.date).toLocaleDateString()}</h3>
+                    <div class="order-items">
+                        ${itemsHTML}
+                    </div>
+                    <p><strong>Subtotal:</strong> $${order.subtotal.toFixed(2)}</p>
+                    <p><strong>Tax:</strong> $${order.tax.toFixed(2)}</p>
+                    <p><strong>Delivery Fee:</strong> $${order.deliveryFee.toFixed(2)}</p>
+                    <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+                    <p><strong>Payment Method:</strong> ${order.paymentMethod === 'cash' ? 'Cash on Delivery' : 'Vodafone Cash / InstaPay'}</p>
+                    <button class="cancel-btn" onclick="cancelOrder(${index})"><i class="fas fa-times"></i> Cancel Order</button>
+                `;
+                ordersGrid.appendChild(orderCard);
+            });
+        }
+
+        // Function to cancel an order
+        function cancelOrder(index) {
+            if (confirm("Are you sure you want to cancel this order?")) {
+                const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                const userOrders = orders.filter(order => order.userEmail === currentUser.email);
+
+                if (userOrders[index]) {
+                    const globalIndex = orders.findIndex(order => order === userOrders[index]);
+                    orders.splice(globalIndex, 1);
+                    localStorage.setItem('orders', JSON.stringify(orders));
+                    displayOrders();
+                    alert("Order canceled successfully.");
+                }
+            }
+        }
+
+        // Function to logout
+        function logout(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('currentUser');
+                alert("You have been logged out successfully.");
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</body>
+</html>
